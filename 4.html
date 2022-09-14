@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Homework</title>
+  </head>
+  <body>
+    <!--
+Обязательное задание.
+
+Необходимо реализовать четыре функции, каждая функция должна принимать по два
+числа и выполнять одну из операций (каждая функция выполняет одну из них):
+1. Сложение
+2. Разность
+3. Умножение
+4. Деление
+
+Необходимо сделать так, чтобы функция вернула число, например выражение
+`console.log(sum(2, 6));` должно вывести число 8 в консоль (sum - функция
+сложения в данном примере, ваши названия функций могут отличаться).
+
+Округлять значения, которые возвращают функции не нужно, однако, обратите
+внимание на разность, функция должна вычесть из большего числа меньшее, либо
+вернуть 0, если числа равны.
+
+Функциям всегда передаются корректные числа, проверки на NaN, Infinity делать
+не нужно.
+
+Необходимо для всех функций прописать комментарии jsdoc https://jsdoc.app/.
+-->
+    <script>
+      "use strict";
+
+      //Использовала prompt для того ,чтобы были варианты выбора чисел - не судите строго.
+
+      let firstNum = +prompt("Введите число первое число: ");
+      let secondNum = +prompt("Введите число второе число: ");
+
+      const sum = getSumOfNumbers(firstNum, secondNum);
+      console.log(sum);
+      /**
+       * Функция вычисляет сумму двух, введенных пользователем, чисел.
+       * @param {number} a Первое число, введенное пользователем.
+       * @param {number} b Второе число, введенное пользователем.
+       * @return {number} Вернет результат сложения чисел.
+       */
+      function getSumOfNumbers(a, b) {
+        return a + b;
+      }
+
+      const difference = getDifferenceOfNumbers(firstNum, secondNum);
+      console.log(difference);
+      /**
+       * Функция вычисляет разность двух, введенных пользователем, чисел.
+       * @param {number} a Первое число, введенное пользователем.
+       * @param {number} b Второе число, введенное пользователем.
+       * @return {number} Вернет результат вычитания чисел.
+       */
+      function getDifferenceOfNumbers(a, b) {
+        if (a > b) {
+          return a - b;
+        } else if (a < b) {
+          return b - a;
+        } else if (a === b) {
+          return 0;
+        } else {
+          return NaN;
+        }
+      }
+
+      const division = getDivisionOfNumbers(firstNum, secondNum);
+      console.log(division);
+      /**
+       * Функция вычисляет результат деления двух, введенных пользователем, чисел.
+       * @param {number} a Первое число, введенное пользователем.
+       * @param {number} b Второе число, введенное пользователем.
+       * @return {number} Вернет результат деления чисел.
+       */
+      function getDivisionOfNumbers(a, b) {
+        return a / b;
+      }
+
+      const multiplication = getMultiplicationOfNumbers(firstNum, secondNum);
+      console.log(multiplication);
+      /**
+       * Функция вычисляет результат умножения двух, введенных пользователем, чисел.
+       * @param {number} a Первое число, введенное пользователем.
+       * @param {number} b Второе число, введенное пользователем.
+       * @return {number} Вернет результат уьножения чисел.
+       */
+      function getMultiplicationOfNumbers(a, b) {
+        return a * b;
+      }
+    </script>
+  </body>
+</html>
