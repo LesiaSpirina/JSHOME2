@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Homework</title>
+  </head>
+  <body>
+    <!--
+Обязательное задание.
+
+Необходимо скопировать и вставить в данный скрипт все функции из 4 задания.
+Необходимо реализовать функцию:
+mathOperation(arg1, arg2, operation);
+Параметры:
+arg1 - первое число.
+arg2 - второе число.
+operation - строка, которая содержит один символ из: "+", "-", "*", "/".
+Функция mathOperation должна вернуть результат операции, который был передан в
+параметр operation для двух первых аргументов (arg1 и arg2).
+Функция mathOperation должна использовать для вычисления функции из 4 задания.
+
+Примеры вызова функции:
+console.log(mathOperation(5, 3, "+")); // 8
+console.log(mathOperation(5, 3, ":)")); // NaN
+
+Функции mathOperation всегда передаются корректные числа, проверки на NaN,
+Infinity делать не нужно, однако, в случае если был передан некорректный
+аргумент в параметр operation, необходимо вернуть NaN.
+
+Необходимо для всех функций прописать комментарии jsdoc https://jsdoc.app/.
+-->
+    <script>
+      "use strict";
+
+      let arg1 = +prompt("Введите число первое число: ");
+      let arg2 = +prompt("Введите число второе число: ");
+      let operation = prompt('Введите один из знаков "+" , "-", "/", "*"');
+
+      /**
+       * Функция вычисляет результат действий, которые переданы в operation, между вдумя числами,\
+       * введенными пользователем.
+       * @param {number} firstNum Первое, введенное пользователем число.
+       * @param {number} secondNum Второе, введенное пользователем число.
+       * @param {string} operation. Возможные действия: "+","-","/","*".
+       * @return {number} Вернет результат от operation между двумя, введенными пользователем числами.
+       */
+      function mathOperation(arg1, arg2, operation) {
+        if (operation === "+") {
+          console.log(getSumOfNumbers(arg1, arg2));
+        } else if (operation === "-") {
+          console.log(getDifferenceOfNumbers(arg1, arg2));
+        } else if (operation === "/") {
+          console.log(getDivisionOfNumbers(arg1, arg2));
+        } else if (operation === "*") {
+          console.log(getMultiplicationOfNumbers(arg1, arg2));
+        } else {
+          console.log(NaN);
+        }
+      }
+
+      console.log(mathOperation(arg1, arg2, operation));
+
+      /**
+       * Функция вычисляет сумму двух, введенных пользователем, чисел.
+       * @param {number} a Первое число, введенное пользователем.
+       * @param {number} b Второе число, введенное пользователем.
+       * @return {number} Вернет результат сложения чисел.
+       */
+      function getSumOfNumbers(a, b) {
+        return a + b;
+      }
+
+      /**
+       * Функция вычисляет разность двух, введенных пользователем, чисел.
+       * @param {number} a Первое число, введенное пользователем.
+       * @param {number} b Второе число, введенное пользователем.
+       * @return {number} Вернет результат вычитания чисел.
+       */
+      function getDifferenceOfNumbers(a, b) {
+        if (a > b) {
+          return a - b;
+        } else if (a < b) {
+          return b - a;
+        } else if (a === b) {
+          return 0;
+        } else {
+          return NaN;
+        }
+      }
+
+      /**
+       * Функция вычисляет результат деления двух, введенных пользователем, чисел.
+       * @param {number} a Первое число, введенное пользователем.
+       * @param {number} b Второе число, введенное пользователем.
+       * @return {number} Вернет результат деления чисел.
+       */
+      function getDivisionOfNumbers(a, b) {
+        return a / b;
+      }
+
+      /**
+       * Функция вычисляет результат умножения двух, введенных пользователем, чисел.
+       * @param {number} a Первое число, введенное пользователем.
+       * @param {number} b Второе число, введенное пользователем.
+       * @return {number} Вернет результат уьножения чисел.
+       */
+      function getMultiplicationOfNumbers(a, b) {
+        return a * b;
+      }
+    </script>
+  </body>
+</html>
