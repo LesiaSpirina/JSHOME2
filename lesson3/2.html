@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Homework</title>
+  </head>
+  <body>
+    <!--
+Обязательное задание.
+
+Необходимо из объекта, который лежит в константе post вывести значения, к
+которым приписан комментарий, в консоль.
+-->
+    <script>
+      "use strict";
+
+      const post = {
+        author: "John", // вывести этот текст
+        postId: 23,
+        comments: [
+          {
+            userId: 10,
+            userName: "Alex",
+            text: "lorem ipsum",
+            rating: {
+              likes: 10,
+              dislikes: 2, // вывести это число
+            },
+          },
+          {
+            userId: 5, // вывести это число
+            userName: "Jane",
+            text: "lorem ipsum 2", // вывести этот текст
+            rating: {
+              likes: 3,
+              dislikes: 1,
+            },
+          },
+        ],
+      };
+
+      // Для удобства чтения вывела все в отдельный console.log
+      // Если в одну строку выводить то будет так
+      //console.log(post.author, post.comments[0].rating.dislikes, post.comments[1].userId,
+      //post.comments[1].text);
+
+      console.log(post.author); //Выводим свойство объекта author через точку
+
+      console.log(post.comments[0].rating?.dislikes); // свойство comments содержит массив длиной 2.
+      // Чтобы вывести свойство rating  необходимо обратиться к индексу,
+      //в котором лежит это свойство [0].
+      // Затем через точку обратимся к самому свойству rating
+      // ( в rating лежит объект, сoстoящий из 2-х свойств:likes и dislikes).
+      //мы можем не знать есть ли там лайки и дизлайки, и чтоб не получить undefined
+      // поэтому для проверки ставим ?
+      // нас интерсует dislikes. К нему также обратимся через точку и выведем все в консоль.
+
+      console.log(post.comments[1].userId); // Поступим аналогично
+      console.log(post.comments[1].text); //Поступим аналогично
+    </script>
+  </body>
+</html>
