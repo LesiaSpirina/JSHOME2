@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Homework</title>
+  </head>
+  <body>
+    <!--
+Обязательное задание.
+
+Необходимо данное задание выполнить в es5 стиле и в es6 стиле.
+Необходимо создать функцию-конструктор/класс для поста в социальной сети.
+Названия: `PostES5` для es5 стиля и `PostES6` для es6 стиля.
+Пост должен хранить:
+1. Автора поста (имени достаточно).
+2. Текст поста.
+3. Дату и время последнего изменения поста.
+Данные автора поста и текст поста необходимо передавать при создании
+экземпляра объекта.
+Каждому экземпляру объекта должен быть доступен метод `edit`, который будет
+менять текст поста.
+
+---
+
+Необходимо создать функцию-конструктор/класс для закрепленного поста в
+социальной сети.
+Названия: `AttachedPostES5` для es5 стиля и `AttachedPostES6` для es6 стиля.
+Закрепленный пост должен наследоваться от обычного поста.
+Данные автора поста и текст поста необходимо передавать при создании
+экземпляра объекта.
+Закрепленный пост должен иметь свойство `highlighted`, в котором по умолчанию
+будет лежать значение false (это свойство будет обозначать, будет ли наш
+закрепленный пост подсвечен).
+У экземпляров объекта закрепленного поста должен быть метод с названием
+`makeTextHighlighted`, который сделает так, чтобы наш пост стал подсвеченным
+(будет менять свойство `highlighted`).
+
+---
+
+Подсказки:
+1. Задание сложное, советую делать по аналогии с примером на онлайн-занятии.
+2. Обратите внимание что пост хранит "дату и время последнего изменения
+поста", это значит что если пост кто-то изменит (например вызовет какой-то
+метод, который изменит что-то в посте), дата и время последнего изменения
+поста также должна измениться.
+3. Выполняйте все по порядку, не стоит пытаться сделать все сразу, иначе можно
+что-нибудь пропустить.
+4. Если непонятно условие - задайте вопрос.
+-->
+    <script>
+      "use strict";
+
+      //Тяжело пошло задание.Боролась с ним долго,понаписала кучу лишнего, запутала себя еще больше
+      //Что-то делала по типу онлайн урока,что-то сама пыталась, но без просмотра вашего решения
+      //не обошлось((
+
+      //Создаю функцию-конструктор PostES5 для ES5 с параметрами автор и текст. Внутри этой функции
+      //будет объект со свойствами this.author,this.text в которые присвоим значения параметров.
+      //в свойство this.todayDate присвоим new Date(). Так как объект Date без аргументов, то покажет
+      //текущию дату и время. new использую для того,чтобы объект выводился не в строковом варианте.
+      //this.todayDate - это не параметр функции,а свойство объекта,которое будет меняться.
+      function PostES5(author, text) {
+        this.author = author;
+        this.text = text;
+        this.todayDate = new Date();
+      }
+      //В прототип объекта(чтобы метод был доступен последующим экземплярам, созданным от
+      // этого объекта) положу метод edit - для изменения содержимого поста, внутри функции будет
+      // новый пост this.text = text и так как дата и время всегда должны быть свежими при
+      //изменении поста положим this.todayDate = new Date();
+
+      PostES5.prototype.edit = function (text) {
+        this.text = text;
+        this.todayDate = new Date();
+      };
+
+      // Создам переменную для того, чтобы сохранить значение функции PostES5 и в нее положу вызов функции
+      //new PostES5("Леся", "Пост"),выведу в консоль.Так как мы присвоили значение функции PostES5 в переменную,
+      // а в прототипе PostES5 есть метод edit, то переменной доступен этот метод,вызовем его и положим в его
+      // параметры новое значение поста, выведем в консоль для проверки
+      const postES5First = new PostES5("Леся", "Пост");
+      console.log(postES5First);
+      postES5First.edit("Новый пост");
+      console.log(postES5First);
+
+      //Создам функцию - конструктор AttachedPostES5,которая будет наследовать параметры от PostES5 для
+      //закрепленного поста.
+      // С помощью call унвследуем параметры - PostES5.call(this, //author, text)
+      //Добавим свойство this.highlighted  и по умолчанию присвоим ему значение false
+      function AttachedPostES5(author, text) {
+        PostES5.call(this, author, text);
+        this.highlighted = false;
+      }
+      //Создам новый объект с прототипом PostES5.prototype для того, чтобы прототипы были в разных
+      // областях памяти
+      // При создании нового прототипа потеряется  свойство конструктор и необходимо его руками дописать
+      AttachedPostES5.prototype = Object.create(PostES5.prototype);
+      AttachedPostES5.prototype.constructor = AttachedPostES5;
+
+      //В прототипе функции AttachedPostES5 создам метод makeTextHighlighted,который позволит менять
+      // подсветку закрепеленного поста. Внутри метода сделаем функцию this.highlighted = true,
+      // которая и будет менять цвет. this.todayDate = new Date() - для обновления даты и времени
+      AttachedPostES5.prototype.makeTextHighlighted = function () {
+        this.highlighted = true;
+        this.todayDate = new Date();
+      };
+
+      //Создам переменную attachedPostES5First  и положу в нее вызов функции AttachedPostES5 с параметрами
+      //Выведу все в консоль. Вызовем метод makeTextHighlighted и подсветим наш пост.Также унаследуется метод
+      // edit - вызовем его и внесем новые изменения в пост, выведем все в консоль после изменения
+      const attachedPostES5First = new AttachedPostES5("Леся", "Пост");
+      console.log(attachedPostES5First);
+      attachedPostES5First.makeTextHighlighted();
+      attachedPostES5First.edit("Супер новый закрепленный пост");
+      console.log(attachedPostES5First);
+
+      console.log("----------------------------------------");
+
+      //Для ES6 использую class PostES6, также создам конструктор с параметрами constructor(author, text)
+      // в сам объект положим свойства с this  и соответствующими параметрами, положим метод edit, в
+      // котором функция меняет содержание поста, и проставим вызов текущей даты this.text = text;
+      // this.todayDate = new Date();
+      class PostES6 {
+        constructor(author, text) {
+          this.author = author;
+          this.text = text;
+          this.todayDate = new Date();
+        }
+        edit(text) {
+          this.text = text;
+          this.todayDate = new Date();
+        }
+      }
+
+      //Создам переменную postES6Second, ей присвою вызов функции new PostES6 с другими значениями
+      // для разнообразия, выведу в консоль console.log(postES6Second);
+      // postES6Second.edit("New text"); - воспользуюсь методом и изменю содержания поста,выведу в консоль
+
+      const postES6Second = new PostES6("Lesia", "Sometext");
+      console.log(postES6Second);
+      postES6Second.edit("New text");
+      console.log(postES6Second);
+
+      //Создам функцию - конструктор AttachedPostES6, унаследую от PostES6 свойства с помощью extends
+      //Использую super(author, text) для наследования указанных параметров, добавлю новое свойство
+      // this.highlighted = false - по умолчанию положу false. Также внутрь в функцию напишу метод
+      //makeTextHighlighted() -  для изменения подсветки закрепеленного поста и добавлю вызов даты и впемени
+      class AttachedPostES6 extends PostES6 {
+        constructor(author, text) {
+          super(author, text);
+          this.highlighted = false;
+        }
+        makeTextHighlighted() {
+          this.highlighted = true;
+          this.todayDate = new Date();
+        }
+      }
+
+      //Создам переменную attachedPostES6Second  и положу в нее вызов функции AttachedPostES6 с параметрами
+      //Выведу все в консоль. Вызовем метод makeTextHighlighted и подсветим наш пост.Также унаследуется метод
+      // edit - вызовем его и внесем новые изменения в пост, выведем все в консоль после изменения
+      const attachedPostES6Second = new AttachedPostES6("Lesia", "Super text");
+      console.log(attachedPostES6Second);
+      attachedPostES6Second.makeTextHighlighted();
+      attachedPostES6Second.edit("Super - puper text");
+      console.log(attachedPostES6Second);
+    </script>
+  </body>
+</html>
