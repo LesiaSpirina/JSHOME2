@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+      integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
+      crossorigin="anonymous"
+    />
+    <style>
+      i {
+        font-size: 50px;
+      }
+      .golden {
+        color: gold;
+      }
+    </style>
+  </head>
+  <body>
+    <!--
+Необязательное задание.
+
+Выполнить все задачи в теге script. Комментарии, в которых написаны задачи, не
+стирать, код с решением задачи пишем под комментарием.
+-->
+
+    <div class="stars_container">
+      <i class="fas fa-star"></i>
+      <i class="fas fa-star"></i>
+      <i class="fas fa-star"></i>
+      <i class="fas fa-star"></i>
+      <i class="fas fa-star"></i>
+    </div>
+
+    <script>
+      "use strict";
+
+      /*
+  1. При наведении на любую из звезд, данной звезде должен ставиться класс
+  golden, также такой класс должен ставиться всем звездам до нее слева.
+  */
+      // const starEl = document.querySelectorAll(".fa-star");
+      // starEl.forEach((el) => {
+      //   el.addEventListener("mouseover", (event) => {
+      //     el.classList.add("golden");
+      //     el.previousElementSibling.classList.add("golden");
+      //   });
+      //  });
+      // starEl.forEach((el) => {
+      //    el.addEventListener("mouseout", (event) => {
+      //      el.classList.remove("golden");
+      //      el.previousElementSibling.classList.remove("golden");
+      //    });
+      //   });
+      //-------------------------------------------------------------------------------
+      //исправила после просмотра вашего решения. когда делала 2-е задание понимала,
+      //что что-то как-то не клеется.ваш материал очень полезен,спасибо
+      //-------------------------------------------------------------------------------
+      const allStarEl = document.querySelector(".stars_container");
+      allStarEl.addEventListener("mouseover", (event) => {
+        if (!event.target.classList.contains("fa-star")) {
+          //проверка- если то, куда мы навели мышь не
+          return; // имеет класса fa-star,то прекратить событие
+        }
+
+        let star = event.target; // в star сохраним наш целевой элемент
+        do {
+          // будем добавлять класс golden в переменную star и
+          star.classList.add("golden"); // уже после того как присвоили класс golden будем
+          star = star.previousElementSibling; // в переменную ложить новое значение предыдущего элемента
+        } while (star); // и делать это будем до тех пор пока переменная существует
+      });
+
+      /*
+  2. Когда мы уводим курсор мыши от звезды, все поставленные классы из первого
+  задания должны быть удалены.
+   */
+      // document.querySelectorAll(".fa-star").forEach((el) => {
+      //   el.addEventListener("mouseout", (event) => {
+      //     el.classList.remove("golden");
+      //     el.previousElementSibling.classList.remove("golden");
+      //   });
+      // });
+      const allStarEl1 = document.querySelector(".stars_container");
+      allStarEl1.addEventListener("mouseout", (event) => {
+        if (!event.target.classList.contains("fa-star")) {
+          return;
+        }
+
+        let star = event.target;
+        do {
+          star.classList.remove("golden");
+          star = star.previousElementSibling;
+        } while (star);
+      });
+
+      /*
+  3. Когда мы переводим мышь от одной звезды к другой, у нас могут мигать
+  звезды (временно могут становиться черными). Почему так? Напишите словами.
+  Можем ли мы это исправить? Если да, то предложите решение.
+  */
+      //--------------------------------------------------------------------------------------------------
+      //Убирая курсор мыши со звезды мы покидаем наш event.target(целевой элемент) и
+      //соответственно срабатывает другое событие - удаляется класс 'golden'
+      //Если не указывать вот это в коде
+      //starEl.forEach((el) => {
+      //     el.addEventListener("mouseout", (event) => {
+      //     el.classList.remove("golden");
+      //   el.previousElementSibling.classList.remove("golden");
+      //});
+      //});
+      //то класс сохраниться и звезда останеться желтой.
+      //--------------------------------------------------------------
+      // я сейчас просто повторю все, что вы сказали - в html любой перенос строк - это пробел
+      // и убирая курсор со звезды мы попадаем в этот пробел и до того пока курсор не попадет на другую
+      // звезду - будет находится в пробеле(без стилей).  Для того, чтобы мигания не было
+      // обратимся к ноде(провалимся и посмотрим nodeName) и удалим пробел из ноды (#text)
+      allStarEl.childNodes.forEach((node) => {
+        // увидим в NodeList[text,i,text,i.....]  и переберем
+        if (node.nodeName === "#text") {
+          node.remove();
+        }
+      });
+    </script>
+  </body>
+</html>
