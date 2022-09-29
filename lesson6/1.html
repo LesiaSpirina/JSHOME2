@@ -77,7 +77,7 @@
           return;
         }
         btnsEl.innerText = "Добавлено";
-        btnsEl.disabled = "true";
+        btnsEl.disabled = true;
       });
 
       /*
@@ -107,8 +107,8 @@
    */
       const prod = document.querySelector(".product");
       setTimeout(() => {
-        prod.remove(), 2000;
-      });
+        prod.remove();
+      }, 2000);
     </script>
   </body>
 </html>

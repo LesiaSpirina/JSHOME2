@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+      integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
+      crossorigin="anonymous"
+    />
+    <style>
+      i {
+        font-size: 50px;
+      }
+      .golden {
+        color: gold;
+      }
+    </style>
+  </head>
+  <body>
+    <!--
+Необязательное задание.
+
+Выполнить все задачи в теге script. Комментарии, в которых написаны задачи, не
+стирать, код с решением задачи пишем под комментарием.
+-->
+
+    <div class="stars_container">
+      <i class="fas fa-star"></i>
+      <i class="fas fa-star"></i>
+      <i class="fas fa-star"></i>
+      <i class="fas fa-star"></i>
+      <i class="fas fa-star"></i>
+    </div>
+
+    <script>
+      "use strict";
+
+      /*
+  1. При наведении на любую из звезд, данной звезде должен ставиться класс
+  golden, также такой класс должен ставиться всем звездам до нее слева.
+  */
+     //------------------------------------------------------------------------------
+     //решение 1 и 2 задачи без повторения кода-более продвинутый подход!!!!
+     document.querySelector(".stars_container")
+      .addEventListener("mouseout", handler('add'));
+
+      /*
+  2. Когда мы уводим курсор мыши от звезды, все поставленные классы из первого
+  задания должны быть удалены.
+   */
+      
+
+      //сделаем функцию и для того и для другого. назовем просто для примера handler(обработчик)
+      //функция должна принимать событие. Сделали функцию и в обработчик ее закинем 
+      //allStarEl1.addEventListener("mouseout", handler); раз в первом задании стоит .add а во втором .remove
+      //поэтому мы не можем поставить такой же обработчик.
+      //мы в handler не можем засунуть событие и например метод (event, method),который надо выполнить
+      //.remove или .add, потому что эта функция вызывается не сейчас и 
+      //allStarEl1.addEventListener("mouseout", handler(вот сюда)) мы не можем что-то передать
+      //Эта функция вызывается автоматически , когда срабатывает на элементе "mouseout".
+      //мы сделаем по-другому и будем вызывать эту функцию раньше будем передовать туда метод
+      //и эта функция будет возвращать другую функцию, которая будет принимать событие и выполнять действия 
+      //и теперь уже мы можем вызвать  handler и передать  в нее метод(например remove или add).
+      //handler(method) передаться и вот сюда (handler('remove')) придет вот эта функция 
+      //handler(event) {if (!event.target.classList.contains("fa-star")) {
+       //   return;}.
+       //  return function handler(method) будет выполняться и мы будем использовать не только remove, а то 
+       //значение которое записано в методе[]  и вот здесь этот метод и будем использовать
+       //star.classList[method]('golden'). В первом задании тоже самое соответственно, только передаем
+       // метод handler('add')
+       document.querySelector(".stars_container")
+      .addEventListener("mouseout", handler('remove'));
+
+      function handler(method) {
+        return function (event) {
+        if (!event.target.classList.contains("fa-star")) {
+          return;
+        }
+
+        let star = event.target;
+        do {
+          star.classList[method]("golden");
+          star = star.previousElementSibling;
+        } while (star);
+      };
+    };
+
+      
+
+  
+    </script>
+  </body>
+</html>
