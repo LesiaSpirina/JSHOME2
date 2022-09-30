@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Homework</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
+    <style>
+      .nav {
+        margin-top: 30px;
+      }
+      #inputDiv {
+        font-size: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <!--
+Обязательное задание.
+
+Выполнить все задачи в теге script. Комментарии, в которых написаны задачи, не
+стирать, код с решением задачи пишем под комментарием.
+-->
+    <div class="container">
+      <ul class="nav nav-tabs">
+        <li class="nav-item" data-text="T1">
+          <a class="nav-link active" href="#">Link 1</a>
+        </li>
+        <li class="nav-item" data-text="X6">
+          <a class="nav-link" href="#">Link 2</a>
+        </li>
+        <li class="nav-item" data-text="H99">
+          <a class="nav-link" href="#">Link 3</a>
+        </li>
+      </ul>
+
+      <div class="text">Уверен, ты справишься с этим заданием!</div>
+
+      <input type="range" min="20" max="100" />
+      <div id="inputDiv">
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaerat,
+        expedita.
+      </div>
+    </div>
+
+    <script>
+      "use strict";
+
+      /*
+  1. Необходимо сделать так, чтобы при клике на элемент с классом "nav-link",
+  данному элементу ставился класс "active", при этом у всхе других элементов с
+  классом nav-link данных элемент отсутствовал, необходимо использовать
+  делегирование события.
+  Также необходимо чтобы в div с классом text ставился нужный текст, который
+  прописан в объекте panelText (вам необходимо определить самостоятельно, что
+  общего между данной в html версткой и объектом ниже).
+  */
+      //------------------------------------------------------------------------------------------------
+      //Задания вроде не сложное, но голова в связи с происходящими событиями не хочет полноценно работать
+      // поэтому обращаюсь периодически и смотрю ваши решения. Мысленно понимаю, что хочу сделать, но навыков
+      // как хочу написать  и что лучше применить пока не хватает.
+      const panelText = {
+        T1: "Уверен, ты справишься с этим заданием!",
+        X6: "Знаю, программирование это нелегко.",
+        H99: "Однако, программирование, в итоге, принесет свои плоды.",
+      };
+
+      const divEl = document.querySelector(".text");
+      let aLink = document.querySelector(".active"); //у нас есть один элемент с классом active
+      //Найдем его для того, чтобы в последствие изначально удалить этот класс
+
+      const ulEl = document.querySelector("ul");
+      ulEl.addEventListener("click", (event) => {
+        if (!event.target.classList.contains("nav-link")) {
+          // проверка- если при клике на элемент у
+          return; // него отсутствует класс nav-link,то прекратить событие, если нет , то
+        }
+        //выполнить следующее
+        aLink.classList.remove("active"); // удалить класс active у элемента с таким классом
+        event.target.classList.add("active"); // к тоту элементу, на который кликаем добавить класс active
+        aLink = event.target; // а в ссылку пересохраняем новый целевой элемент
+
+        //Значения атрибута data-text и название свойств объекта  panelText одинаковые.
+        //Сохраним значение data-text в переменной textFromLi - для этого выбирая целевой элемент (ссылку)
+        //обратимся к элементу списка(li), т.к у него и есть data-text, через parentElement(как к родителю
+        //для ссылки) и у родителя получим значение атрибута с помощью getAttribute. теперь кликая по
+        //определенной ссылке у нас в переменной будет лежать то, что написано в атрибуте data-text (Т1,Х6,Н99)
+        //В переменную text положим объект и его свойство будет выводиться то, какое значение примет
+        //переменная textFromLi = (Т1,Х6,Н99) и выдернет это свойство из объекта.если Т1- то возмется
+        //значение "Уверен, ты справишься с этим заданием!",если Х6- "Знаю, программирование это нелегко."
+        //и т.д. найдем элемент с классом text и в него с помощью innerText положим то, что будет
+        // выводится при клике по ссылке
+        const textFromLi = event.target.parentElement.getAttribute("data-text");
+        const text = panelText[textFromLi];
+        divEl.innerText = text;
+      });
+
+      /*
+  2. Необходимо сделать так, чтобы при изменении input'а менялся и размер шрифта
+  у элемента с id="inputDiv". Перемещение ползунка должно плавно увеличивать
+  шрифт у текста, никакого резкого увеличения шрифта не должно быть при
+  перетаскивании ползунка.
+   */
+  //----------------------------------------------------------------
+      //найдем элемент ползунок,запишем в rangeInput
+      //найдем элемент див с текстом, который будет меняться - divId
+      //В значение ползунка(rangeInput) присвоим, то , что изначально было прописано в стилях css
+      //у элемента с id="inputDiv"- сейчас это 30px.Так как у нас стиль прописан в css используем метод 
+      //getComputedStyle, чтобы вытянуть это значение - при открытие сайта 
+      //преобразуем значение в число с помощью Number и parseInt(если просто number,
+      //то будет undefined, тк '30px', а parseInt сделает числом 30 и откинет px)
+      //в скобках запишем к какому элементу (divId)используем этот метод(из какого элемента хотим вытянуть) 
+      //и какой стиль хотим найти через точку.fontSize
+      //повесим событие на ползунок - при изменении значение ползунка произойдет:
+      // у дива с текстом измениться стиль- размер шрифта  и оно станет
+      // равным значению ползунка в px
+      const rangeInput = document.querySelector("input");
+      const divId = document.querySelector("#inputDiv");
+      rangeInput.value = Number.parseInt(getComputedStyle(divId).fontSize);
+      rangeInput.addEventListener("input", (event) => {
+        divId.style.fontSize = `${event.target.value}px`;
+      });
+    </script>
+  </body>
+</html>
